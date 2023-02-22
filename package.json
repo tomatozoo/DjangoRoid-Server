@@ -1,0 +1,19 @@
+{
+    "name": "dear_j",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+      "precommit:djangoroid/py": "scripts/precommit-py.sh",
+      "prepare": "husky install"
+    },
+    "devDependencies": {
+      "husky": "^8.0.2",
+      "lint-staged": "^13.1.0"
+    },
+    "lint-staged": {
+      "djangoroid/**/*.py": [
+        "yarn precommit:djangoroid/py"
+      ]
+    }
+  }
+  
