@@ -30,3 +30,4 @@ class TagDestoryView(DestroyAPIView):
         return tag
 
     serializer_class = TagSerializer
+    
