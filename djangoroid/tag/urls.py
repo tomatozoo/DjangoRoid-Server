@@ -6,6 +6,6 @@ from tag import views
 
 urlpatterns = [
     urls.path("", views.TagListCreateView.as_view()),
-    urls.path("create/", views.TagListCreateView.as_view()),
+    # urls.path("create/", views.TagListCreateView.as_view()),
     urls.path("delete/<tid>/", views.TagDestoryView.as_view()),
 ]

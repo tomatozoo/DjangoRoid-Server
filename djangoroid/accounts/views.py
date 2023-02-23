@@ -21,7 +21,7 @@ def signup(request):
 
         try:
             user = User.objects.get(username=username)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={'detail' : f"{username} is already exist"}, status=status.HTTP_400_BAD_REQUEST)
         except User.DoesNotExist:
             nickname = request.data['nickname'] if 'nickname' in request.data else "Anonymous"
             user = User.objects.create(username=username, password=password, nickname=nickname)
@@ -40,7 +40,6 @@ def login(request):
             token = Token.objects.create(user=user)
             token.save()
             token = Token.objects.get(user_id=user.id)
-            # tags = []
             user_to_tag = UserToTag.objects.filter(user=user)
             tags = [str(utt.tag) for utt in user_to_tag]
             content = {'token' : token.key,
@@ -50,7 +49,7 @@ def login(request):
                         'tags' : tags}}
             return Response(data=content, status=status.HTTP_200_OK)
         except User.DoesNotExist:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(data={'detail' : f"User not found. id : {username} pw : {password}"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def logout(request):
