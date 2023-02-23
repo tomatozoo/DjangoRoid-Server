@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 
-from accounts.models import User
+from accounts.models import CustomUser as User
 # from serializers import UserSerializer
 
 
@@ -13,6 +13,7 @@ from accounts.models import User
 def signup(request):
     if request.method == 'POST':
         username = request.data['username']
+        # nickname = request.data['']
         password = request.data['password']
         try:
             user = User.objects.get(username=username)
@@ -31,7 +32,8 @@ def login(request):
         try:
             user = User.objects.get(username=username, password=password)
             token = Token.objects.get(user_id=user.id)
-            content = {'token' : token.key}
+            content = {'token' : token.key,
+                       'nickname' : user.nickname}
             return Response(data=content, status=status.HTTP_200_OK)
         except User.DoesNotExist:
             return Response(data={'detail' : f"No user matches. id : {username} pw : {password}"}, status=status.HTTP_200_OK)
