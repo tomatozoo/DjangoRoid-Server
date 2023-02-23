@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Note(models.Model):
+    nid = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
@@ -42,6 +43,7 @@ class TagToNote(models.Model):
 
 
 class Comment(models.Model):
+    cid = models.AutoField(primary_key=True)
     note = models.ForeignKey(Note, on_delete=models.CASCADE)
     content = models.CharField(max_length=500)
     created_by = models.ForeignKey(User, on_delete=models.PROTECT)
