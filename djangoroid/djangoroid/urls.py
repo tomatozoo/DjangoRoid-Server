@@ -21,4 +21,5 @@ urlpatterns = [
     urls.path("admin/", admin.site.urls),
     urls.path("docs/", urls.include("docs.urls")),
     urls.path("accounts/", urls.include("accounts.urls")),
+    urls.path("tags/", urls.include("tag.urls")),
 ]
