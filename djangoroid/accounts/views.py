@@ -18,7 +18,8 @@ def signup(request):
 
         try:
             user = User.objects.get(username=username)
-            return Response(data={'detail' : f"{username} is already exist"}, status=status.HTTP_200_OK)
+            # return Response(data={'detail' : f"{username} is already exist"}, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         except User.DoesNotExist:
             user = User.objects.create(**request.data)
             user.save()
@@ -38,7 +39,8 @@ def login(request):
                        'nickname' : user.nickname}
             return Response(data=content, status=status.HTTP_200_OK)
         except User.DoesNotExist:
-            return Response(data={'detail' : f"No user matches. id : {username} pw : {password}"}, status=status.HTTP_200_OK)
+            # return Response(data={'detail' : f"No user matches. id : {username} pw : {password}"}, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def logout(request):
@@ -46,4 +48,4 @@ def logout(request):
     key = request.data['key']
     token = Token.objects.get(key=key)
     token.delete()
-    return redirect(BASE_URL + "login/")
+    return Response(status=status.HTTP_204_NO_CONTENT)
