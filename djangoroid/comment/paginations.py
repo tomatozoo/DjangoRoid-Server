@@ -1,6 +1,6 @@
 from rest_framework import pagination
 
 
-class NoteListPagination(pagination.CursorPagination):
+class CommentListPagination(pagination.CursorPagination):
     page_size = 10
     ordering = "-created_at"

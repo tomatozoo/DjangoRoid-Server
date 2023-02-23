@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from tag import models as tag_models
+
 
 class Note(models.Model):
     nid = models.AutoField(primary_key=True)
@@ -32,38 +34,7 @@ class NoteContributor(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class Tag(models.Model):
-    name = models.CharField(primary_key=True, max_length=30)
-
-
 class TagToNote(models.Model):
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tag = models.ForeignKey(tag_models.Tag, on_delete=models.CASCADE)
     note = models.ForeignKey(Note, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-
-
-class Comment(models.Model):
-    cid = models.AutoField(primary_key=True)
-    note = models.ForeignKey(Note, on_delete=models.CASCADE)
-    content = models.CharField(max_length=500)
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    is_updated = models.BooleanField(default=False)
-    waffle_count = models.IntegerField()
-
-    class Meta:
-        verbose_name = "comment"
-        verbose_name_plural = "comments"
-        db_table = "comments"
-
-
-class Waffle(models.Model):
-    note = models.ForeignKey(Note, on_delete=models.CASCADE)
-    created_by = models.ForeignKey(User, on_delete=models.PROTECT)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name = "waffle"
-        verbose_name_plural = "waffles"
-        db_table = "waffles"

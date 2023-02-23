@@ -16,15 +16,3 @@ class PublicOrIsNoteCreator(permissions.IsAuthenticatedOrReadOnly):
 class IsNoteCreator(permissions.IsAuthenticatedOrReadOnly):
     def has_object_permission(self, request: rest_request.Request, view, obj: note_models.Note):
         return obj.created_by == request.user
-
-
-class IsNotePublicAndCommentCreator(permissions.IsAuthenticatedOrReadOnly):
-    def has_object_permission(self, request: rest_request.Request, view, obj: note_models.Comment):
-        if obj.note.is_public:
-            return True
-        return obj.note.created_by == request.user
-
-
-class IsCommentCreator(permissions.IsAuthenticatedOrReadOnly):
-    def has_object_permission(self, request: rest_request.Request, view, obj: note_models.Note):
-        return obj.created_by == request.user

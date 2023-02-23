@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     "note.apps.NoteConfig",
+    "tag.apps.TagConfig",
+    "comment.apps.CommentConfig",
+    "waffle.apps.WaffleConfig",
 ]
 
 REST_FRAMEWORK = {
