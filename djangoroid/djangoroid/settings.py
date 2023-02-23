@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_yasg",
     "accounts.apps.AccountsConfig",
+    "tag.apps.TagConfig",
     "rest_framework.authtoken",
 ]
 
