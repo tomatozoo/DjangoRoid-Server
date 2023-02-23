@@ -16,7 +16,9 @@ Including another URLconf
 from django import urls
 from django.contrib import admin
 
+from accounts import views
 urlpatterns = [
     urls.path("admin/", admin.site.urls),
     urls.path("docs/", urls.include("docs.urls")),
+    urls.path("accounts/", urls.include("accounts.urls")),
 ]
