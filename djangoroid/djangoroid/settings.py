@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "note.apps.NoteConfig",
     "comment.apps.CommentConfig",
     "star.apps.StarConfig",
+    "search.apps.SearchConfig",
     "rest_framework.authtoken",
 ]
 
@@ -151,4 +152,3 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
-
