@@ -25,4 +25,5 @@ urlpatterns = [
     urls.path("notes/", urls.include("note.urls")),
     urls.path("notes/", urls.include("comment.urls")),
     urls.path("notes/", urls.include("star.urls")),
+    urls.path("search/", urls.include("search.urls")),
 ]

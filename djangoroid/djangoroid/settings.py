@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from djangoroid import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-7ful-9r9hf0mm-%=@^^a9la=(&uyq15_ucj%551x0-svp-l%^g"
+SECRET_KEY = config.SECRET_KEY
+
+# aws settings
+AWS_ACCESS_KEY_ID = config.AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = config.AWS_SECRET_ACCESS_KEY
+
+AWS_REGION = config.AWS_REGION
+AWS_STORAGE_BUCKET_NAME = config.AWS_STORAGE_BUCKET_NAME
+AWS_S3_CUSTOM_DOMAIN = config.AWS_S3_CUSTOM_DOMAIN
+AWS_S3_OBJECT_PARAMETERS = config.AWS_S3_OBJECT_PARAMETERS
+DEFAULT_FILE_STORAGE = config.DEFAULT_FILE_STORAGE
+MEDIA_ROOT = config.MEDIA_ROOT
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "storages",
     "rest_framework",
     "drf_yasg",
     "accounts.apps.AccountsConfig",
@@ -44,6 +58,7 @@ INSTALLED_APPS = [
     "note.apps.NoteConfig",
     "comment.apps.CommentConfig",
     "star.apps.StarConfig",
+    "search.apps.SearchConfig",
     "rest_framework.authtoken",
 ]
 
@@ -137,4 +152,3 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
-
