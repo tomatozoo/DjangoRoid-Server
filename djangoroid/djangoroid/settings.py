@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "note.apps.NoteConfig",
     "comment.apps.CommentConfig",
     "star.apps.StarConfig",
+    "recommend.apps.RecommendConfig",
     "search.apps.SearchConfig",
     "rest_framework.authtoken",
 ]
