@@ -1,12 +1,16 @@
 from django.shortcuts import render, resolve_url, redirect, get_object_or_404
 from django.contrib import auth
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 
-from accounts.models import CustomUser as User
+# from accounts.models import CustomUser as User
+from django.contrib.auth import get_user_model  
+User = get_user_model()
+
 from accounts.models import UserToTag
 
 from tag.models import Tag

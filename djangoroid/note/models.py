@@ -2,8 +2,9 @@ from django.db import models
 
 from tag.models import Tag
 
-from accounts.models import User
-
+# from accounts.models import CustomUser as User
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 
 IMAGE_DIR = ""
 
