@@ -45,6 +45,7 @@ def fork(request, *args, **kwargs):
         note_id = kwargs['notePk']
         note = get_object_or_404(Note, created_by=user_id, id=note_id, is_public=True)
         note.fork_count += 1
+        note.save()
         new_note = Note.objects.create(title=note.title,
                                        description=note.description,
                                        created_by=user.id,
