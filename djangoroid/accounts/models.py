@@ -11,4 +11,3 @@ class UserToTag(models.Model):
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='tag')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     
-    
