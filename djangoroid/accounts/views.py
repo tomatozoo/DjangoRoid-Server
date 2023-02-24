@@ -1,4 +1,4 @@
-from django.shortcuts import render, resolve_url, redirect
+from django.shortcuts import render, resolve_url, redirect, get_object_or_404
 from django.contrib import auth
 
 from rest_framework.decorators import api_view
@@ -31,8 +31,8 @@ def signup(request):
             user.save()
             if 'tags' in request.data.keys():
                 for tag in request.data['tags']:
-                    UserToTag.objects.create(
-                        tag=Tag.objects.get(name=tag), user=user)
+                    tag_obj = get_object_or_404(Tag, name=tag)
+                    UserToTag.objects.create(tag=tag_obj, user=user)
             else:
                 pass
             return Response(data={'detail': f"id : {username} / pw : {password} user created"},

@@ -23,7 +23,7 @@ class ImageAlbum(models.Model):
 class Note(models.Model):
     title = models.CharField(max_length=50, blank=False)
     description = models.CharField(max_length=200, blank=False)
-    created_by = models.CharField(max_length=20, blank=False)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     # file = models.OneToOneField(ImageAlbum, on_delete=models.CASCADE, related_name='images')

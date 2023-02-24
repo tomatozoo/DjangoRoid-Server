@@ -26,7 +26,8 @@ class TagDestoryView(DestroyAPIView):
         try:
             tag = Tag.objects.get(id=tid)
         except Tag.DoesNotExist:
-            return Response({'detail' : f'No tag matches. {tid}'}, status=status.HTTP_200_OK)
+            return Response({'detail': f'No tag matches. {tid}'}, 
+                            status=status.HTTP_200_OK)
         return tag
 
     serializer_class = TagSerializer
