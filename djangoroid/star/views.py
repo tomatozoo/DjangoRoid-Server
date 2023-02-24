@@ -61,11 +61,13 @@ def ViewFunctionFactory(model_class, waffle_class, pk):
             
             id = kwargs[pk]
             obj = get_object_or_404(model_class, id=id)
-            obj.waffle_count -= 1
-            obj.save()
             
             waffle = get_object_or_404(waffle_class, obj=obj, created_by=user)
             waffle.delete()
+            
+            obj.waffle_count -= 1
+            obj.save()
+            
             return Response(status=status.HTTP_204_NO_CONTENT)
     return view
 
