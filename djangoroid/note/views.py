@@ -20,13 +20,14 @@ def fork(request, *args, **kwargs):
     if request.method == 'POST':
         user_id = kwargs['userPk']
         note_id = kwargs['notePk']
+        fork_to = request.data['fork_to']
         note = get_object_or_404(Note, created_by=user_id, id=note_id)
-        note['fork_count'] += 1
-        fork_keys = ['title', 'description', 'is_public', 'tag', 'waffle_count', 'contributor']
-        origin = {k:note[k] for k in fork_keys}
-        new_note = Note.objects.create(created_by=user_id,
-                                       history=note['created_by'],
-                                       **origin)
+        note.fork_count += 1
+        new_note = Note.objects.create(title=note.title,
+                                       description=note.description,
+                                       created_by=fork_to,
+                                       is_public=note.is_public,
+                                       history=user_id)                                      
         new_note.save()
         return Response(data={'detail' : 'fork'})
 
