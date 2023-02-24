@@ -25,7 +25,7 @@ class CommentListView(generics.ListAPIView):
 
 
 class CommentCreateView(generics.ListCreateAPIView):
-    serializer_class = CommentListSerializer
+    serializer_class = CommentDetailSerializer
     permission_classes = [permissions.PublicOrIsCommmentCreator]
     authentication_classes = [authentication.TokenAuthentication]
 

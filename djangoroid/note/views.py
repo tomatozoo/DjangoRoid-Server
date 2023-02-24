@@ -17,7 +17,10 @@ from note.models import Note, NoteToTag, Canvas, Page
 from tag.models import Tag
 from tag.serializers import TagSerializer
 
-from accounts.models import User
+# from accounts.models import CustomUser
+# from accounts.models import CustomUser as User
+from django.contrib.auth import get_user_model  
+User = get_user_model()
 
 from comment.models import Comment
 
@@ -58,6 +61,7 @@ def fork(request, *args, **kwargs):
         note = get_object_or_404(
             Note, created_by=user_id, id=note_id, is_public=True)
         note.fork_count += 1
+        note.save()
         new_note = Note.objects.create(title=note.title,
                                        description=note.description,
                                        created_by=user.id,
@@ -82,6 +86,8 @@ class NoteListView(generics.ListAPIView):
 class NoteCreateView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         user = get_user(request)
+        if not isinstance(user, User):
+            return user
         request.data['created_by'] = user.id
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)

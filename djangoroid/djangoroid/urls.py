@@ -24,4 +24,5 @@ urlpatterns = [
     urls.path("tags/", urls.include("tag.urls")),
     urls.path("notes/", urls.include("note.urls")),
     urls.path("notes/", urls.include("comment.urls")),
+    urls.path("notes/", urls.include("star.urls")),
 ]
