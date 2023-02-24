@@ -49,7 +49,7 @@ def login(request):
         
         try:
             user = User.objects.get(username=username, password=password)
-            token = Token.objects.create(user=user)
+            token, _ = Token.objects.get_or_create(user=user)
             token.save()
             token = Token.objects.get(user_id=user.id)
             user_to_tag = UserToTag.objects.filter(user=user)
