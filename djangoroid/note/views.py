@@ -125,6 +125,7 @@ class NoteDetailView(generics.RetrieveUpdateDestroyAPIView):
                 user = get_user(self.request)
                 if not isinstance(user, User):
                     return "No permission"
+                self.request.data['contributor'] = user.nickname
             else:
                 self.check_object_permissions(self.request, note)
 

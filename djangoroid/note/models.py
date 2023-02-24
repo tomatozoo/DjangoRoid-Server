@@ -32,6 +32,7 @@ class Note(models.Model):
     fork_count = models.IntegerField(default=0)
     waffle_count = models.IntegerField(default=0)
     # image related
+    contributor = models.CharField(max_length=50, blank=True)
     canvas = models.OneToOneField(Canvas, on_delete=models.CASCADE, null=True)
     thumbnail = models.ImageField(upload_to=IMAGE_DIR, null=True)
 
