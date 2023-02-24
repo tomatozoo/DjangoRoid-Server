@@ -1,6 +1,4 @@
 from django import urls
-from django.contrib import auth
-from django.contrib.auth import views as auth_views
 
 from accounts import views
 

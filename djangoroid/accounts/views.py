@@ -1,12 +1,16 @@
 from django.shortcuts import render, resolve_url, redirect, get_object_or_404
 from django.contrib import auth
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 
-from accounts.models import CustomUser as User
+# from accounts.models import CustomUser as User
+from django.contrib.auth import get_user_model  
+User = get_user_model()
+
 from accounts.models import UserToTag
 
 from tag.models import Tag
@@ -45,11 +49,9 @@ def login(request):
         
         try:
             user = User.objects.get(username=username, password=password)
-            
             token = Token.objects.create(user=user)
             token.save()
             token = Token.objects.get(user_id=user.id)
-            
             user_to_tag = UserToTag.objects.filter(user=user)
             tags = [str(utt.tag) for utt in user_to_tag]
             content = {'token' : token.key,

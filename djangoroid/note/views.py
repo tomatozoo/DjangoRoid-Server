@@ -16,7 +16,10 @@ from note.models import Note, NoteToTag
 from tag.models import Tag
 from tag.serializers import TagSerializer
 
-from accounts.models import User
+# from accounts.models import CustomUser
+# from accounts.models import CustomUser as User
+from django.contrib.auth import get_user_model  
+User = get_user_model()
 
 from comment.models import Comment
 
@@ -66,6 +69,9 @@ class NoteListView(generics.ListAPIView):
 class NoteCreateView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         user = get_user(request)
+        print(user)
+        if not isinstance(user, User):
+            return user
         request.data['created_by'] = user.id
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
