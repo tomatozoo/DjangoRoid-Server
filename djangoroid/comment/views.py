@@ -57,13 +57,13 @@ class CommentDetailView(generics.RetrieveUpdateDestroyAPIView):
                     return self.permission_denied(
                         self.request,
                         message="permission denied",
-                        code=status.HTTP_403_FORBIDDEN
+                        code=status.HTTP_401_UNAUTHORIZED
                     )
             except Token.DoesNotExist:
                 return self.permission_denied(
                     self.request,
                     message="permission denied",
-                    code=status.HTTP_403_FORBIDDEN
+                    code=status.HTTP_401_UNAUTHORIZED
                 )
         return comment
 
