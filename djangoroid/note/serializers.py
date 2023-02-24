@@ -1,7 +1,9 @@
 from rest_framework import serializers
-
 from note.models import Note, NoteToTag, Canvas, Page
 from tag.models import Tag
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 def get_tag_note_objects(note):
@@ -28,12 +30,14 @@ class NoteListSerializer(serializers.ModelSerializer):
         ret = super().to_representation(instance)
         tags = get_tag_note_objects(instance)
         ret['tags'] = [tag.tag.name for tag in tags]
+        user = User.objects.get(id=ret['created_by'])
+        ret['created_by'] = user.nickname
         return ret
 
     class Meta:
         model = Note
         fields = ['id', 'title', 'description', 'waffle_count', 'fork_count',
-                  'is_public', 'created_by', 'created_at', 'updated_at']
+                  'is_public', 'created_by', 'created_at', 'updated_at', 'thumbnail']
 
 
 class NoteDetailSerializer(serializers.ModelSerializer):
@@ -41,6 +45,8 @@ class NoteDetailSerializer(serializers.ModelSerializer):
         ret = super().to_representation(instance)
         tags = get_tag_note_objects(instance)
         ret['tags'] = [tag.tag.name for tag in tags]
+        user = User.objects.get(id=ret['created_by'])
+        ret['created_by'] = user.nickname
         return ret
 
     class Meta:
