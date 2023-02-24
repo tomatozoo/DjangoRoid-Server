@@ -127,8 +127,7 @@ class NoteDetailView(generics.RetrieveUpdateDestroyAPIView):
                     return "No permission"
             else:
                 self.check_object_permissions(self.request, note)
-        if self.request.method == 'delete':
-            self.check_object_permissions(self.request, note)
+
         return note
 
     def update(self, request, *args, **kwargs):
