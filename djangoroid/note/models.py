@@ -6,19 +6,19 @@ from tag.models import Tag
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
-IMAGE_DIR = ""
+IMAGE_DIR = "note/"
 
 
-class Image(models.Model):
-    image = models.ImageField(upload_to=IMAGE_DIR)
-    page = models.IntegerField(blank=False)
-    title = models.CharField(max_length=20, blank=True)
-    description = models.CharField(max_length=50, blank=True)
+class Canvas(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
 
 
-class ImageAlbum(models.Model):
-    def default(self):
-        return self.images.filter(default=True).first()
+class Page(models.Model):
+    page = models.IntegerField()
+    canvas = models.ForeignKey(
+        Canvas, on_delete=models.CASCADE, related_name="pages")
+    background = models.ImageField(upload_to=IMAGE_DIR, null=True)
 
 
 class Note(models.Model):
@@ -27,12 +27,13 @@ class Note(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    # file = models.OneToOneField(ImageAlbum, on_delete=models.CASCADE, related_name='images')
     is_public = models.BooleanField(default=True)
     history = models.CharField(max_length=20, blank=True)
     fork_count = models.IntegerField(default=0)
     waffle_count = models.IntegerField(default=0)
-    # thumbnail = models.ImageField()
+    # image related
+    canvas = models.OneToOneField(Canvas, on_delete=models.CASCADE, null=True)
+    thumbnail = models.ImageField(upload_to=IMAGE_DIR, null=True)
 
 
 class NoteToTag(models.Model):
@@ -47,10 +48,3 @@ class NoteToContributor(models.Model):
         User, on_delete=models.CASCADE, related_name="user_note")
     note = models.ForeignKey(
         Note, on_delete=models.CASCADE, related_name="note_note2")
-
-
-class NoteToImage(models.Model):
-    image = models.ForeignKey(
-        Image, on_delete=models.CASCADE, related_name="image_note")
-    note = models.ForeignKey(
-        Note, on_delete=models.CASCADE, related_name="note_note3")
