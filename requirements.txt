@@ -6,3 +6,4 @@ dj-database-url==1.2.0
 psycopg2==2.9.5
 python-decouple==3.7
 whitenoise==6.3.0
+channels==4.0.0
