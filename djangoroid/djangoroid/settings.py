@@ -43,8 +43,20 @@ INSTALLED_APPS = [
     "drf_yasg",
     "accounts.apps.AccountsConfig",
     "tag.apps.TagConfig",
+    "live.apps.LiveConfig",
     "rest_framework.authtoken",
 ]
+
+ASGI_APPLICATION = "whiteboardmanager.routing.application"
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
