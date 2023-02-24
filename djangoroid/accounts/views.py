@@ -49,9 +49,11 @@ def login(request):
         
         try:
             user = User.objects.get(username=username, password=password)
+            
             token, _ = Token.objects.get_or_create(user=user)
             token.save()
             token = Token.objects.get(user_id=user.id)
+            
             user_to_tag = UserToTag.objects.filter(user=user)
             tags = [str(utt.tag) for utt in user_to_tag]
             content = {'token' : token.key,
