@@ -1,6 +1,7 @@
 from django.db import models
 
 from tag.models import Tag
+
 from accounts.models import User
 
 

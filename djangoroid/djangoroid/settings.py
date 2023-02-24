@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "tag.apps.TagConfig",
     "note.apps.NoteConfig",
+    "comment.apps.CommentConfig",
     "rest_framework.authtoken",
 ]
 
