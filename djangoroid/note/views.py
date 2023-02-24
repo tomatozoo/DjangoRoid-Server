@@ -70,7 +70,6 @@ class NoteListView(generics.ListAPIView):
 class NoteCreateView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         user = get_user(request)
-        print(user)
         if not isinstance(user, User):
             return user
         request.data['created_by'] = user.id
