@@ -60,7 +60,7 @@ class NoteListView(generics.ListAPIView):
     def get_queryset(self):
         user_id = self.kwargs['userPk']
         user = User.objects.get(id=user_id)
-        notes = Note.objects.filter(created_by=user, is_public=True)
+        notes = Note.objects.filter(created_by=user)
         return notes
     
     serializer_class = NoteListSerializer
