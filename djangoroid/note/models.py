@@ -29,7 +29,7 @@ class Note(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     # file = models.OneToOneField(ImageAlbum, on_delete=models.CASCADE, related_name='images')
     is_public = models.BooleanField(default=True)
-    history = models.CharField(max_length=20, blank=False)
+    history = models.CharField(max_length=20, blank=True)
     fork_count = models.IntegerField(default=0)
     waffle_count = models.IntegerField(default=0)
     # thumbnail = models.ImageField()
