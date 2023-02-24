@@ -13,6 +13,7 @@ from tag.models import Tag
 
 BASE_URL = "http://127.0.0.1/"
 
+
 @api_view(['POST'])
 def signup(request):
     if request.method == 'POST':
@@ -21,11 +22,11 @@ def signup(request):
 
         try:
             user = User.objects.get(username=username)
-            return Response(data={'detail': f"{username} is already exist"}, 
+            return Response(data={'detail': f"{username} is already exist"},
                             status=status.HTTP_400_BAD_REQUEST)
         except User.DoesNotExist:
             nickname = request.data['nickname'] if 'nickname' in request.data else "Anonymous"
-            user = User.objects.create(username=username, 
+            user = User.objects.create(username=username,
                                        password=password, nickname=nickname)
             user.save()
             if 'tags' in request.data.keys():
@@ -34,34 +35,36 @@ def signup(request):
                     UserToTag.objects.create(tag=tag_obj, user=user)
             else:
                 pass
-            return Response(data={'detail': f"id : {username} / pw : {password} user created"}, 
+            return Response(data={'detail': f"id : {username} / pw : {password} user created"},
                             status=status.HTTP_201_CREATED)
+
 
 @api_view(['POST'])
 def login(request):
     if request.method == 'POST':
         username = request.data['username']
         password = request.data['password']
-        
+
         try:
             user = User.objects.get(username=username, password=password)
-            
-            token = Token.objects.create(user=user)
+
+            token, _ = Token.objects.get_or_create(user=user)
             token.save()
             token = Token.objects.get(user_id=user.id)
-            
+
             user_to_tag = UserToTag.objects.filter(user=user)
             tags = [str(utt.tag) for utt in user_to_tag]
-            content = {'token' : token.key,
-                       'user' : {'id': user.id,
-                       'username': user.username,
-                       'nickname': user.nickname,
-                       'tags': tags}}
-            return Response(data=content, 
+            content = {'token': token.key,
+                       'user': {'id': user.id,
+                                'username': user.username,
+                                'nickname': user.nickname,
+                                'tags': tags}}
+            return Response(data=content,
                             status=status.HTTP_200_OK)
         except User.DoesNotExist:
-            return Response(data={'detail': f"User not found. id : {username} pw : {password}"}, 
+            return Response(data={'detail': f"User not found. id : {username} pw : {password}"},
                             status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def logout(request):

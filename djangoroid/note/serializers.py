@@ -8,6 +8,7 @@ def get_tag_note_objects(note):
     return tags
 
 
+
 class NoteListSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         ret = super().to_representation(instance)
@@ -16,7 +17,8 @@ class NoteListSerializer(serializers.ModelSerializer):
         return ret
     class Meta:
         model = Note
-        fields = ['id', 'title', 'description', 'waffle_count', 'fork_count', 'is_public', 'created_by', 'created_at', 'updated_at']
+        fields = ['id', 'title', 'description', 'waffle_count', 'fork_count',
+                  'is_public', 'created_by', 'created_at', 'updated_at']
 
 
 class NoteDetailSerializer(serializers.ModelSerializer): 
@@ -29,4 +31,3 @@ class NoteDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'
-        
