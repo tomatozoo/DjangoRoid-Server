@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "accounts.apps.AccountsConfig",
     "tag.apps.TagConfig",
+    "note.apps.NoteConfig",
     "rest_framework.authtoken",
 ]
 

@@ -26,8 +26,11 @@ def signup(request):
             nickname = request.data['nickname'] if 'nickname' in request.data else "Anonymous"
             user = User.objects.create(username=username, password=password, nickname=nickname)
             user.save()
-            for tag in request.data['tags']:
-                UserToTag.objects.create(tag=Tag.objects.get(name=tag), user=user)
+            if 'tags' in request.data.keys():
+                for tag in request.data['tags']:
+                    UserToTag.objects.create(tag=Tag.objects.get(name=tag), user=user)
+            else:
+                pass
             return Response(data={'detail' : f"id : {username} / pw : {password} user created"}, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
