@@ -18,7 +18,7 @@ from note.models import Note
 class CommentListView(generics.ListAPIView):
     def get_queryset(self):
         note_id = self.kwargs['notePk']
-        note = get_object_or_404(Note, id=note_id, is_public=True)
+        note = get_object_or_404(Note, id=note_id)
         comments = Comment.objects.filter(note=note)
         return comments
     serializer_class = CommentListSerializer
