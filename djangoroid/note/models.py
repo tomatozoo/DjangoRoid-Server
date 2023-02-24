@@ -7,6 +7,8 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 IMAGE_DIR = ""
+
+
 class Image(models.Model):
     image = models.ImageField(upload_to=IMAGE_DIR)
     page = models.IntegerField(blank=False)
@@ -26,23 +28,29 @@ class Note(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
     # file = models.OneToOneField(ImageAlbum, on_delete=models.CASCADE, related_name='images')
-    is_public = models.BooleanField(default=False)
-    history = models.CharField(max_length=20, blank=True)
+    is_public = models.BooleanField(default=True)
+    history = models.CharField(max_length=20, blank=False)
     fork_count = models.IntegerField(default=0)
     waffle_count = models.IntegerField(default=0)
     # thumbnail = models.ImageField()
-        
+
 
 class NoteToTag(models.Model):
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name="tag_note")
-    note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name="note_note")
+    tag = models.ForeignKey(
+        Tag, on_delete=models.CASCADE, related_name="tag_note")
+    note = models.ForeignKey(
+        Note, on_delete=models.CASCADE, related_name="note_note")
 
 
 class NoteToContributor(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_note")
-    note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name="note_note2")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="user_note")
+    note = models.ForeignKey(
+        Note, on_delete=models.CASCADE, related_name="note_note2")
 
 
 class NoteToImage(models.Model):
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name="image_note")
-    note = models.ForeignKey(Note, on_delete=models.CASCADE, related_name="note_note3")
+    image = models.ForeignKey(
+        Image, on_delete=models.CASCADE, related_name="image_note")
+    note = models.ForeignKey(
+        Note, on_delete=models.CASCADE, related_name="note_note3")
